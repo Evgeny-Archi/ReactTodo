@@ -1,4 +1,5 @@
 import {
+  SET_TODOS,
   ADD_TODO,
   TOGGLE_COMPLETED,
   DELETE_TODO,
@@ -6,16 +7,15 @@ import {
 } from '../actions/actionTypes'
 
 const initialState = {
-  todos: [
-    { id: 1, text: 'First todo', completed: false },
-    { id: 2, text: 'todo second', completed: true },
-    { id: 3, text: 'todo third', completed: false },
-    { id: 4, text: 'Another todo.', completed: true },
-  ],
+  todos: [],
 }
 
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_TODOS:
+      return {
+        todos: [...state.todos, ...action.payload],
+      }
     case ADD_TODO:
       return {
         todos: [...state.todos, action.payload],

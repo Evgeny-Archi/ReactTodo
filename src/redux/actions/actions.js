@@ -1,9 +1,17 @@
 import {
+  SET_TODOS,
   ADD_TODO,
   TOGGLE_COMPLETED,
   DELETE_TODO,
   SAVE_TODO,
 } from './actionTypes'
+
+export function setTodoFromData(todos) {
+  return {
+    type: SET_TODOS,
+    payload: todos,
+  }
+}
 
 export function addTodoAC(text) {
   return {
