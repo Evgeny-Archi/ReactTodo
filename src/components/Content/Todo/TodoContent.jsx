@@ -8,12 +8,20 @@ import {
   toggleCompletedAC,
   deleteTodoAC,
   saveTodoAC,
+  fetchTodosAC,
 } from '../../../redux/actions/actions'
 
 const TodoContent = () => {
-  const todosState = useSelector((state) => state.todos)
-  const todos = [...todosState].reverse()
   const dispatch = useDispatch()
+
+  // React.useEffect(() => {
+  //   dispatch(fetchTodosAC())
+  // })
+
+  const todosState = useSelector((state) => state.todos)
+  const isLoading = useSelector((state) => state.isLoading)
+  const error = useSelector((state) => state.error)
+  const todos = [...todosState].reverse()
 
   const handleCompleted = (id) => {
     dispatch(toggleCompletedAC(id))
@@ -27,12 +35,20 @@ const TodoContent = () => {
     dispatch(saveTodoAC(id, text))
   }
 
+  if (isLoading) {
+    return <p>Loading...</p>
+  }
+
+  if (error) {
+    return <p>{error.toString()}</p>
+  }
+
   return (
     <Wrap>
       <Form />
       <Statistic />
       <TodosWrap>
-        {todos && todos.length !== 0 ? (
+        {todos.length !== 0 ? (
           todos.map((item, i) => (
             <Todos
               key={item.id}

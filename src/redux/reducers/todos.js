@@ -1,17 +1,31 @@
 import {
+  SET_LOADING,
   SET_TODOS,
   ADD_TODO,
   TOGGLE_COMPLETED,
   DELETE_TODO,
   SAVE_TODO,
+  SET_ERROR,
 } from '../actions/actionTypes'
 
 const initialState = {
   todos: [],
+  isLoading: false,
+  error: null,
 }
 
 const todoReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload,
+      }
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      }
     case SET_TODOS:
       return {
         todos: [...state.todos, ...action.payload],
