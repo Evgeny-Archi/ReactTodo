@@ -6,6 +6,8 @@ export const ButtonElement = styled.button`
   padding: 5px 10px;
   cursor: pointer;
   color: #2f575d;
+  display: flex;
+  align-items: center;
 
   &:disabled {
     opacity: 0.6;

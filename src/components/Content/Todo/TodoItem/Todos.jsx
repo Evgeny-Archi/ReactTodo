@@ -5,6 +5,7 @@ import TodoEdit from './TodoEdit'
 
 const Todos = (props) => {
   const [editing, setEditing] = useState(false)
+  const [isLoading, setLoading] = useState(false)
 
   const handleEditTodo = () => {
     setEditing(true)
@@ -16,7 +17,11 @@ const Todos = (props) => {
 
   const handleSaveEdit = (id, text) => {
     props.saveEdit(id, text)
-    setEditing(false)
+  }
+
+  const deleteHandler = () => {
+    setLoading(true)
+    props.handleDelete(props.id)
   }
 
   return (
@@ -39,10 +44,10 @@ const Todos = (props) => {
             />
             <label htmlFor={props.id}>{props.text}</label>
           </div>
-          <div>
-            <Button onClick={handleEditTodo}>Edit</Button>&nbsp;
-            <Button onClick={props.handleDelete.bind(null, props.id)}>
-              Delete
+          <div style={{ display: 'flex' }}>
+            <Button onClick={handleEditTodo}>Изменить</Button>&nbsp;
+            <Button onClick={deleteHandler} isLoading={isLoading}>
+              Удалить
             </Button>
           </div>
         </>

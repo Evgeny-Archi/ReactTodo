@@ -4,6 +4,7 @@ import Input from '../../../UI/Input/Input'
 
 const TodoEdit = (props) => {
   const [value, setValue] = useState(props.text)
+  const [isLoading, setLoading] = useState(false)
   const inputEl = useRef(null)
 
   useEffect(() => {
@@ -12,6 +13,11 @@ const TodoEdit = (props) => {
 
   const handleChange = (e) => {
     setValue(e.target.value)
+  }
+
+  const saveEditText = () => {
+    setLoading(true)
+    props.saveEdit(props.id, value)
   }
 
   return (
@@ -23,9 +29,11 @@ const TodoEdit = (props) => {
         inputRef={inputEl}
       />
       &nbsp;
-      <Button onClick={() => props.saveEdit(props.id, value)}>Save</Button>
+      <Button onClick={saveEditText} isLoading={isLoading}>
+        Сохранить
+      </Button>
       &nbsp;
-      <Button onClick={props.cancelEditing}>Cancel</Button>
+      <Button onClick={props.cancelEditing}>Отмена</Button>
     </>
   )
 }

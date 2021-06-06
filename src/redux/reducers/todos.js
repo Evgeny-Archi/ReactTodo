@@ -9,9 +9,10 @@ import {
 } from '../actions/actionTypes'
 
 const initialState = {
-  todos: [],
+  items: [],
   isLoading: false,
   error: null,
+  isCached: false,
 }
 
 const todoReducer = (state = initialState, action) => {
@@ -28,17 +29,22 @@ const todoReducer = (state = initialState, action) => {
       }
     case SET_TODOS:
       return {
-        todos: [...state.todos, ...action.payload],
+        ...state,
+        items: action.payload.todos,
+        isLoading: false,
+        isCached: true,
       }
     case ADD_TODO:
       return {
-        todos: [...state.todos, action.payload],
+        ...state,
+        items: [...state.items, action.payload],
+        isCached: true,
       }
     case TOGGLE_COMPLETED:
       return {
         ...state,
-        todos: state.todos.map((todo) => {
-          if (todo.id === +action.payload.id) {
+        items: state.items.map((todo) => {
+          if (todo.id === action.payload.id) {
             return { ...todo, completed: !todo.completed }
           }
           return todo
@@ -46,13 +52,14 @@ const todoReducer = (state = initialState, action) => {
       }
     case DELETE_TODO:
       return {
-        todos: [...state.todos.filter((todo) => todo.id !== action.payload.id)],
+        ...state,
+        items: [...state.items.filter((todo) => todo.id !== action.payload.id)],
       }
     case SAVE_TODO:
       return {
         ...state,
-        todos: state.todos.map((todo) => {
-          if (todo.id === +action.payload.id) {
+        items: state.items.map((todo) => {
+          if (todo.id === action.payload.id) {
             return { ...todo, text: action.payload.text }
           }
           return todo
